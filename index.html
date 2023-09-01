@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Playground</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #code-panel {
+            flex: 1;
+            padding: 20px;
+            background-color: #f0f0f0;
+            overflow-y: scroll;
+        }
+
+        #output-panel {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            border-left: 1px solid #ccc;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="code-panel">
+        <h2>JavaScript Code</h2> <textarea id="code" rows="10"
+            cols="50">            var i = 1;            console.log(i);        </textarea> <button id="run-button">Run
+            Code</button>
+    </div>
+    <div id="output-panel">
+        <h2>Output</h2>
+        <pre id="output"></pre>
+    </div>
+    <script>        const codeTextArea = document.getElementById('code'); const runButton = document.getElementById('run-button'); const outputPre = document.getElementById('output');        // Intercept console.log messages        const originalConsoleLog = console.log;        console.log = function(message) {            originalConsoleLog.apply(console, arguments);            outputPre.textContent += message + '\n';        };        runButton.addEventListener('click', () => {            const code = codeTextArea.value;            try {                outputPre.textContent = ''; // Clear previous output                eval(code);            } catch (error) {                outputPre.textContent = `Error: ${error.message}`;            }        });    </script>
+</body>
+
+</html>
